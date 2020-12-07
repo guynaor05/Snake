@@ -77,8 +77,44 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="734" y="355" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/2560.-4.1536.824@0.0.2560.1400" timestamp="1607177085251" />
+    <state width="683" height="466" key="DebuggerActiveHint" timestamp="1607370736739">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="683" height="466" key="DebuggerActiveHint/0.0.2560.1400/2560.-4.1536.824@0.0.2560.1400" timestamp="1607370736739" />
+    <state width="2517" height="307" key="GridCell.Tab.0.bottom" timestamp="1607375160321">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="307" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.-4.1536.824@0.0.2560.1400" timestamp="1607375160321" />
+    <state width="2517" height="307" key="GridCell.Tab.0.center" timestamp="1607375160321">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="307" key="GridCell.Tab.0.center/0.0.2560.1400/2560.-4.1536.824@0.0.2560.1400" timestamp="1607375160321" />
+    <state width="2517" height="307" key="GridCell.Tab.0.left" timestamp="1607375160321">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="307" key="GridCell.Tab.0.left/0.0.2560.1400/2560.-4.1536.824@0.0.2560.1400" timestamp="1607375160321" />
+    <state width="2517" height="307" key="GridCell.Tab.0.right" timestamp="1607375160321">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="307" key="GridCell.Tab.0.right/0.0.2560.1400/2560.-4.1536.824@0.0.2560.1400" timestamp="1607375160321" />
+    <state width="2517" height="307" key="GridCell.Tab.1.bottom" timestamp="1607375160321">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="307" key="GridCell.Tab.1.bottom/0.0.2560.1400/2560.-4.1536.824@0.0.2560.1400" timestamp="1607375160321" />
+    <state width="2517" height="307" key="GridCell.Tab.1.center" timestamp="1607375160321">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="307" key="GridCell.Tab.1.center/0.0.2560.1400/2560.-4.1536.824@0.0.2560.1400" timestamp="1607375160321" />
+    <state width="2517" height="307" key="GridCell.Tab.1.left" timestamp="1607375160321">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="307" key="GridCell.Tab.1.left/0.0.2560.1400/2560.-4.1536.824@0.0.2560.1400" timestamp="1607375160321" />
+    <state width="2517" height="307" key="GridCell.Tab.1.right" timestamp="1607375160321">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="307" key="GridCell.Tab.1.right/0.0.2560.1400/2560.-4.1536.824@0.0.2560.1400" timestamp="1607375160321" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Snake$main.coverage" NAME="main Coverage Results" MODIFIED="1607177086625" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Snake$main.coverage" NAME="main Coverage Results" MODIFIED="1607375160306" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
