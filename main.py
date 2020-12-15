@@ -4,11 +4,8 @@ import tkinter as tk
 from tkinter import messagebox
 
 pygame.init()
-
 screen_width = 1000
 screen_height = 1000
-snake_x = screen_height // 2
-snake_y = screen_width // 2
 display = pygame.display.set_mode((screen_width, screen_height))
 snake_block = 25
 red_color = (255, 0, 0)
@@ -19,9 +16,8 @@ running = True
 def draw_bored():
     x, y = 0, 0
     for _ in range(rows):
-        x = x + snake_block
-        y = y + snake_block
-
+        x += snake_block
+        y += snake_block
         # draws a line from start point given in parameter 3 to end point given in parameter 4
         pygame.draw.line(display, (128, 128, 128), (x, 0), (x, screen_width))
         pygame.draw.line(display, (128, 128, 128), (0, y), (screen_width, y))
@@ -37,7 +33,7 @@ def redraw_window():
 
 class Cube(object):
 
-    def __init__(self, start, dirnx=0, dirny=0, color=(255, 0, 0)):
+    def __init__(self, start, color=(255, 0, 0)):
         self.pos = start
         self.dirnx = 0
         self.dirny = 0
@@ -46,7 +42,7 @@ class Cube(object):
     def move(self, dirnx, dirny):
         self.dirnx = dirnx
         self.dirny = dirny
-        # change the pos of the cube
+        # change the position of the cube
         self.pos = (self.pos[0] + self.dirnx, self.pos[1] + self.dirny)
 
     def draw(self, eyes=False):
@@ -54,7 +50,7 @@ class Cube(object):
         j = self.pos[1]
         # draws the snake without eyes
         pygame.draw.rect(display, self.color,
-                         (i * snake_block + 1, j * snake_block + 1, snake_block - 2, snake_block - 2))
+                         (i * snake_block + 1, j * snake_block + 2, snake_block - 2, snake_block - 2))
         # draws with eyes if the eyes == True
         if eyes:
             centre = snake_block // 2
@@ -78,26 +74,45 @@ class Snake(object):
         self.body.append(self.head)
         self.dirnx = 0
         self.dirny = 1
+        self.score = 1
 
     def move(self):
+        movingx = self.dirnx
+        movingy = self.dirny
         # searches for a movement on keyboard
         for snake_event in pygame.event.get():
             if snake_event.type == pygame.QUIT:
                 self.game_finished = True
             if snake_event.type == pygame.KEYDOWN:
-                if snake_event.key == pygame.K_UP: #and self.dirnx != 0 and self.dirnx != 1:
+                if snake_event.key == pygame.K_UP and len(self.body) == 1:
                     self.dirnx = 0
                     self.dirny = -1
                     self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
-                elif snake_event.key == pygame.K_DOWN:# and self.dirnx != 0 and self.dirnx != -1:
+                elif snake_event.key == pygame.K_DOWN and len(self.body) == 1:
                     self.dirnx = 0
                     self.dirny = 1
                     self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
-                elif snake_event.key == pygame.K_LEFT:# and self.dirnx != 1 and self.dirnx != 0:
+                elif snake_event.key == pygame.K_LEFT and len(self.body) == 1:
                     self.dirnx = -1
                     self.dirny = 0
                     self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
-                elif snake_event.key == pygame.K_RIGHT:# and self.dirnx != -1 and self.dirnx != 0:
+                elif snake_event.key == pygame.K_RIGHT and len(self.body) == 1:
+                    self.dirnx = 1
+                    self.dirny = 0
+                    self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+                if snake_event.key == pygame.K_UP and movingy != 1 and movingx != 0 and len(self.body) > 1:
+                    self.dirnx = 0
+                    self.dirny = -1
+                    self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+                if snake_event.key == pygame.K_DOWN and movingx != 0 and movingy != -1 and len(self.body) > 1:
+                    self.dirnx = 0
+                    self.dirny = 1
+                    self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+                if snake_event.key == pygame.K_LEFT and movingx != 1 and movingy != 0 and len(self.body) > 1:
+                    self.dirnx = -1
+                    self.dirny = 0
+                    self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
+                if snake_event.key == pygame.K_RIGHT and movingx != -1 and movingy != 0 and len(self.body) > 1:
                     self.dirnx = 1
                     self.dirny = 0
                     self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
@@ -109,19 +124,19 @@ class Snake(object):
                 c.move(turn[0], turn[1])
                 if i == len(self.body) - 1:
                     self.turns.pop(p)
-            # checks if the snake touches the walls and end the game if the snake those
+            # checks if the snake touches the walls and end the game if the snake does
             else:
                 if c.dirnx == -1 and c.pos[0] <= 0:
-                    message_box('You Lost!', 'Play again...')
+                    message_box(self.score)
                     snake.reset((10, 10))
                 elif c.dirnx == 1 and c.pos[0] >= rows - 1:
-                    message_box('You Lost!', 'Play again...')
+                    message_box(self.score)
                     snake.reset((10, 10))
                 elif c.dirny == 1 and c.pos[1] >= rows - 1:
-                    message_box('You Lost!', 'Play again...')
+                    message_box(self.score)
                     snake.reset((10, 10))
                 elif c.dirny == -1 and c.pos[1] <= 0:
-                    message_box('You Lost!', 'Play again...')
+                    message_box(self.score)
                     snake.reset((10, 10))
                 else:
                     c.move(c.dirnx, c.dirny)
@@ -158,6 +173,7 @@ class Snake(object):
 
         self.body[-1].dirnx = dx
         self.body[-1].dirny = dy
+        self.score += 1
 
 
 def random_snack(item):
@@ -176,11 +192,11 @@ def random_snack(item):
 
 
 # i dont really know
-def message_box(subject, content):
+def message_box(score):
     root = tk.Tk()
     root.attributes("-topmost", True)
     root.withdraw()
-    messagebox.showinfo(subject, content)
+    messagebox.showinfo('You Lost!', f'Score: {score}\nPlay again...')
     try:
         root.destroy()
     except:
@@ -201,8 +217,7 @@ while running:
     for x in range(len(snake.body)):
         # checks if a part of the body touches an other part of it
         if snake.body[x].pos in list(map(lambda z: z.pos, snake.body[x + 1:])):
-            print('Score: ', len(snake.body))
-            message_box('You Lost!', 'Play again...')
+            message_box(snake.score)
             snake.reset((10, 10))
             break
     snake.move()
