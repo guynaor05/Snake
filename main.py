@@ -53,10 +53,10 @@ class Cube(object):
                          (i * snake_block + 1, j * snake_block + 2, snake_block - 2, snake_block - 2))
         # draws with eyes if the eyes == True
         if eyes:
-            centre = snake_block // 2
+            center = snake_block // 2
             radius = 4
             # making both of the eyes for the head of the snake
-            circle_middle = (i * snake_block + centre - radius, j * snake_block + 6)
+            circle_middle = (i * snake_block + center - radius, j * snake_block + 6)
             circle_middle2 = (i * snake_block + snake_block - radius * 2, j * snake_block + 6)
             # drawing the eyes on the head
             pygame.draw.circle(display, (0, 0, 0), circle_middle, radius)
@@ -74,7 +74,7 @@ class Snake(object):
         self.body.append(self.head)
         self.dirnx = 0
         self.dirny = 1
-        self.score = 1
+        self.score = 0
 
     def move(self):
         movingx = self.dirnx
@@ -104,15 +104,15 @@ class Snake(object):
                     self.dirnx = 0
                     self.dirny = -1
                     self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
-                if snake_event.key == pygame.K_DOWN and movingx != 0 and movingy != -1 and len(self.body) > 1:
+                elif snake_event.key == pygame.K_DOWN and movingx != 0 and movingy != -1 and len(self.body) > 1:
                     self.dirnx = 0
                     self.dirny = 1
                     self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
-                if snake_event.key == pygame.K_LEFT and movingx != 1 and movingy != 0 and len(self.body) > 1:
+                elif snake_event.key == pygame.K_LEFT and movingx != 1 and movingy != 0 and len(self.body) > 1:
                     self.dirnx = -1
                     self.dirny = 0
                     self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
-                if snake_event.key == pygame.K_RIGHT and movingx != -1 and movingy != 0 and len(self.body) > 1:
+                elif snake_event.key == pygame.K_RIGHT and movingx != -1 and movingy != 0 and len(self.body) > 1:
                     self.dirnx = 1
                     self.dirny = 0
                     self.turns[self.head.pos[:]] = [self.dirnx, self.dirny]
@@ -197,6 +197,7 @@ def message_box(score):
     root.attributes("-topmost", True)
     root.withdraw()
     messagebox.showinfo('You Lost!', f'Score: {score}\nPlay again...')
+    snake.score = 0
     try:
         root.destroy()
     except:
@@ -205,7 +206,6 @@ def message_box(score):
 
 snake = Snake((255, 0, 0), (10, 10), False)
 snack = Cube(random_snack(snake), color=(0, 255, 0))
-draw_bored()
 clock = pygame.time.Clock()
 while running:
     pygame.time.delay(50)
@@ -214,12 +214,17 @@ while running:
         snake.add_cube()
         # new snack
         snack = Cube(random_snack(snake), color=(0, 255, 0))
-    for x in range(len(snake.body)):
-        # checks if a part of the body touches an other part of it
-        if snake.body[x].pos in list(map(lambda z: z.pos, snake.body[x + 1:])):
+    # checks if a part of the body touches an other part of it
+    snake_body = snake.body.copy()
+    snake_body.remove(snake.head)
+    for body_cube in snake_body:
+        if snake.head.pos == body_cube.pos:
+            # moved body cube that was hit, so we can see the snake head
+            snake.body.remove(body_cube)
+            redraw_window()
             message_box(snake.score)
             snake.reset((10, 10))
-            break
+
     snake.move()
     if snake.game_finished:
         break
